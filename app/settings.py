@@ -5,6 +5,13 @@ Project wide settings
 from apispec import APISpec
 from apispec.ext.marshmallow import MarshmallowPlugin
 
+DEBUG = True
+
+"""
+Generate using: os.urandom(12).hex()
+"""
+SECRET = "ede509945c147a831b39f772"
+
 
 # SWAGGER ui and docs
 SWAGGER_SETTINGS = {
@@ -23,6 +30,6 @@ DATABASE = {
     'db': 'myapp',
     # 'username': '<username>',
     # 'password': '<password>',
-    'port': '27017',
-    'host': 'localhost'
+    # 'port': '27017',
+    # 'host': 'localhost'
 }
