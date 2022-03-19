@@ -8,7 +8,8 @@ from flask_apispec.views import MethodResource
 from flask_apispec import marshal_with, doc, use_kwargs
 
 # schemas
-from ..schemas.auth import  AuthSchema, AuthErrorResponseSchema, AuthTokenResponseSchema
+from ..schemas.auth import  AuthSchema, AuthTokenResponseSchema
+from common.schemas import ErrorResponseSchema
 
 # models
 from ...models.auth import User
@@ -20,11 +21,9 @@ class AuthToken(MethodResource, Resource):
 
     @doc(description='Get JWT Token', tags=['Authentication'])
     @use_kwargs(AuthSchema, location=('json'))
-    @marshal_with(AuthErrorResponseSchema, code=400)
+    @marshal_with(ErrorResponseSchema, code=400)
     @marshal_with(AuthTokenResponseSchema, code=201)
     def post(self, **kwargs):
-        print(self.__dict__)
-        payload = AuthSchema(kwargs)
         user = User.objects(username=kwargs.get('username')).first()
 
         # check if user exists

@@ -1,8 +1,8 @@
-from telnetlib import SE
 from flask import Flask
-from flask_apispec.extension import FlaskApiSpec
 from flask_mongoengine import MongoEngine
-from marshmallow import ValidationError
+
+from flask_apispec.extension import FlaskApiSpec
+from common.exception import ApiValidationError
 
 from settings import SWAGGER_SETTINGS, DATABASE, SECRET
 
@@ -36,17 +36,18 @@ def register_commands():
     from management import management_command
     app.cli.add_command(management_command)
 
+
+@app.errorhandler(ApiValidationError)
+def unexpected_error_handler(error):
+    """App wide error handler for swagger schema exceptions"""
+    rv = dict({'message': str(error)})
+    return rv, 400
+
+
 @app.errorhandler(Exception)
 def unexpected_error_handler(error):
     """App wide error handler for uncaught exceptions"""
-    print(error.__class__)
-    rv = dict({'message': json.dumps("asd")})
-    return rv, 400
-
-@app.errorhandler(ValidationError)
-def error_handler(error):
-    """App wide error handler for validation error"""
-    rv = dict({'message': json.dumps(error.messages)})
+    rv = dict({'message': "Unknown exception occured"})
     return rv, 400
 
 register_apis()

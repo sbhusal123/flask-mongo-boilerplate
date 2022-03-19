@@ -3,8 +3,7 @@
 **Features**
 - Swagger Docs
 - Dockerized Setup
-- Unit Tests and Mock Setup
 - Mongodb Schemas
-- Unit test cases and CI integration
-- JWT token based authentication
+- Unit test cases, Faker and CI integration
+- Timed Token based authentication
 - Logger Setup

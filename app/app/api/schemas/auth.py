@@ -1,6 +1,6 @@
-from marshmallow import Schema, fields, validates, ValidationError, \
-    validates_schema
+from marshmallow import Schema, fields, validates_schema
 
+from common.exception import ApiValidationError
 
 class AuthSchema(Schema):
     """Schema for POST request to get token"""
@@ -17,12 +17,8 @@ class AuthSchema(Schema):
     @validates_schema
     def validate_input(self, data, **kwargs):
         if data['username'] == "" or data["password"] == "":
-            raise ValidationError("asdsad")
+            raise ApiValidationError("Username or password cannot be empty")
 
-
-class AuthErrorResponseSchema(Schema):
-    """Auth token error schema"""
-    message = fields.Str()
 
 class AuthTokenResponseSchema(Schema):
     """AUth token success schema"""
