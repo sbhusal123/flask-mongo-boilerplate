@@ -26,11 +26,10 @@ docs = FlaskApiSpec(app)
 def register_apis():
     """Register blueprint and swagger docs"""
     from app.api import auth_api
-    from app.api import AuthToken, AuthUser
+    from app.api.views.auth import AuthToken
     
     app.register_blueprint(auth_api)
     docs.register(AuthToken, blueprint='auth_api')
-    docs.register(AuthUser, blueprint='auth_api')
 
 def register_commands():
     """register custom cli commands"""

@@ -2,6 +2,7 @@
 Add a management command here
 """
 
+from curses.ascii import US
 import click
 from flask.cli import AppGroup
 
@@ -21,5 +22,8 @@ def create_user(name, password):
     Create auth user and password
     usage: flask manage create_user <username> <password>
     """
+    if User.objects(username=name).first():
+        print(f"User {name} already exists.")
+
     u = User(username=name, password=generate_password_hash(password))
     u.save()

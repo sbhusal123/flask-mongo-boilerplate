@@ -12,6 +12,8 @@ Generate using: os.urandom(12).hex()
 """
 SECRET = "ede509945c147a831b39f772"
 
+AUTH_SECRET = "ZiBE12H-xg0KWUTiqL6b57JnIEsAWJ170LfnYm0CgFw="
+
 
 # SWAGGER ui and docs
 SWAGGER_SETTINGS = {

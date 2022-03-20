@@ -23,3 +23,6 @@ class AuthSchema(Schema):
 class AuthTokenResponseSchema(Schema):
     """AUth token success schema"""
     token = fields.Str()
+
+class AuthUser(Schema):
+    user = fields.Str()
