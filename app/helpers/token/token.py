@@ -61,17 +61,3 @@ class Token(object):
             return data_dict.get("data")
         else:
             return False
-
-
-"""
-# Initialize JWT with time to live in second.
-t = Token(ttl_in_second=2)
-
-data = "my awesome data"
-token = t.get_token(data)
-print(token)
-
-print("\n")
-text = t.get_data(token)
-print(text)
-"""

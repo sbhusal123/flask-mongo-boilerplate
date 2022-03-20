@@ -13,9 +13,12 @@ from common.schemas import ErrorResponseSchema
 # models
 from ...models.auth import User
 
+# middlewares
 from app.middlewares.login_required import auth
 
+# utils
 from werkzeug.security import check_password_hash
+from helpers.token.token import Token
 
 
 
@@ -26,7 +29,6 @@ class AuthToken(MethodResource, Resource):
     @marshal_with(ErrorResponseSchema, code=400)
     @marshal_with(AuthTokenResponseSchema, code=201)
     def post(self, **kwargs):
-        from heplers.token.token import Token
         user = User.objects(username=kwargs.get('username')).first()
 
         # check if user exists
@@ -47,7 +49,7 @@ class AuthUser(MethodResource, Resource):
     @marshal_with(AuthUser, code=200)
     @auth
     def get(self, user):
-        return {"user": user.username}
+        return {"user": user.username}, 200
 
 
 auth_api = Blueprint('auth_api', __name__)

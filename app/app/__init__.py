@@ -6,7 +6,7 @@ from common.exception import ApiValidationError
 
 from settings import SWAGGER_SETTINGS, DATABASE, SECRET
 
-import json
+from management import management_command
 
 app = Flask("app")
 
@@ -34,7 +34,6 @@ def register_apis():
 
 def register_commands():
     """register custom cli commands"""
-    from management import management_command
     app.cli.add_command(management_command)
 
 

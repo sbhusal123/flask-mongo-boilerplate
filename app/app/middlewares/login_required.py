@@ -1,8 +1,10 @@
 from flask import request
 
-from functools import wraps
-
 from app.models.auth import User
+
+from helpers.token import Tokenizer
+
+from functools import wraps
 
 
 def auth(func):
@@ -11,7 +13,6 @@ def auth(func):
 
     @wraps(func)
     def wrapped(*args, **kwargs):
-        from heplers.token.token import Token
 
         # Get Authorization header
         request_token = request.headers.get('Authorization')
@@ -24,17 +25,20 @@ def auth(func):
         try:
             # Get the token, from the Authorization header and decode it
             request_token = request_token.split(" ")[1]
-            data = Token.get_data(request_token)
+
+
+            data = Tokenizer().get_data(str(request_token))
+            if not data:
+                return {'message':'Invalid token.'}, 400
 
             # Check if user exists with hased username
-            user = User.object(username=data).first()
-            return {'user': "asd"}
+            user = User.objects(username="surya").first()
             if user:
                 return func(*args,**kwargs, user=user)
             else:
                 return {'message':'You are not authorized'}, 400
         except Exception as e:
             print(e.__class__)
-            return {'message': 'Invalid token provided'}, 400
+            return {'message': 'Some exception occured'}, 400
         
     return wrapped
