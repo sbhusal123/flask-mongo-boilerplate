@@ -8,7 +8,9 @@ from functools import wraps
 
 
 def auth(func):
-    """Authentication jwt middleware decorator/ token checker"""
+    """Authentication jwt middleware decorator/ token checker
+       returns user object as extra arg to decorated function
+    """
 
 
     @wraps(func)
@@ -28,11 +30,12 @@ def auth(func):
 
 
             data = Tokenizer().get_data(str(request_token))
+            print(data)
             if not data:
                 return {'message':'Invalid token.'}, 400
 
             # Check if user exists with hased username
-            user = User.objects(username="surya").first()
+            user = User.objects(username=data).first()
             if user:
                 return func(*args,**kwargs, user=user)
             else:
