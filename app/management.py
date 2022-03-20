@@ -2,7 +2,6 @@
 Add a management command here
 """
 
-from curses.ascii import US
 import click
 from flask.cli import AppGroup
 
